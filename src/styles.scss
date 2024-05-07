@@ -8,4 +8,21 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   background-color: rgb(40, 40, 40);
+  box-sizing: border-box;
+}
+
+// select currency comp styling
+mat-form-field {
+  padding-top: 1.25rem;
+
+  .mat-mdc-text-field-wrapper.mdc-text-field--outlined
+    .mat-mdc-form-field-infix {
+    padding-top: 8px !important;
+    padding-bottom: 6px !important;
+  }
+
+  .mat-mdc-form-field-infix {
+    min-height: 2rem !important;
+    max-width: 3rem !important;
+  }
 }

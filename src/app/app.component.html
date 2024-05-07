@@ -1,3 +1,19 @@
 <mat-toolbar>
-  <mat-icon svgIcon="crypTrends" />
+  <div class="icon-container">
+    <mat-icon svgIcon="crypTrends" />
+    <span class="brand-label">Cryptrends</span>
+  </div>
+  <div class="select-currency-container">
+    <span class="currency-label">Devise</span>
+    <mat-form-field appearance="outline">
+      <mat-select
+        [ngModel]="currency.getValue()"
+        (valueChange)="currency.setValue($event)"
+      >
+        @for(currency of currencies; track currency){
+        <mat-option [value]="currency">{{ currency }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
 </mat-toolbar>

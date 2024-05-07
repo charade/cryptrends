@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { Currency } from '../utils';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CurrencyService {
-  currency$ = new BehaviorSubject<'INR' | 'USD' | undefined>(undefined);
+  currency$ = new BehaviorSubject<Currency>('INR');
 
-  setCurrency(value: 'INR' | 'USD'): void {
+  setValue(value: Currency): void {
     this.currency$.next(value);
   }
 
-  getCurrency(): 'INR' | 'USD' {
+  getValue(): Currency {
     return this.currency$.value;
   }
 }

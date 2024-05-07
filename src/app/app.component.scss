@@ -1,2 +1,39 @@
 mat-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem;
+
+  .icon-container {
+    display: flex;
+    align-items: center;
+    & > * {
+      margin: 0 1rem;
+    }
+
+    mat-icon {
+      width: 2.5rem;
+      height: 2.5rem;
+    }
+
+    .brand-label {
+      font-size: 1rem;
+      font-weight: 400;
+      color: #ffffffd7;
+    }
+  }
+
+  .select-currency-container {
+    display: flex;
+    align-items: center;
+
+    .currency-label {
+      font-size: 1rem;
+      font-weight: 400;
+    }
+
+    & > * {
+      margin: 0 1rem;
+    }
+  }
 }
