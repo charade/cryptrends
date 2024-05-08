@@ -2,13 +2,16 @@ mat-toolbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 2rem;
+  padding: 2rem 0;
+  height: 4rem;
 
   .icon-container {
     display: flex;
     align-items: center;
+    margin-left: 0.25rem;
+
     & > * {
-      margin: 0 1rem;
+      margin: 0 0.25rem;
     }
 
     mat-icon {
@@ -17,9 +20,9 @@ mat-toolbar {
     }
 
     .brand-label {
-      font-size: 1rem;
+      font-size: 0.75rem;
       font-weight: 400;
-      color: #ffffffd7;
+      color: rgb(139, 162, 182);
     }
   }
 
@@ -28,12 +31,64 @@ mat-toolbar {
     align-items: center;
 
     .currency-label {
-      font-size: 1rem;
+      font-size: 0.8rem;
       font-weight: 400;
     }
 
     & > * {
       margin: 0 1rem;
+    }
+  }
+}
+
+.home-content {
+  margin: 1rem 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.5rem 0.25rem;
+
+  .trending-coins-container {
+    height: 30vh;
+    width: 100%;
+
+    .trending-coins-label {
+      font-size: 1rem;
+      font-weight: 400;
+      padding-bottom: 0.5rem;
+      color: rgb(139, 162, 182);
+      border-bottom: 1px solid #ffffff9e;
+      width: 11rem;
+    }
+
+    .trending-coins-list-container {
+      display: flex;
+      height: 100%;
+      width: 100%;
+      overflow: scroll;
+
+      mat-card {
+        width: 16rem;
+        min-width: 16rem;
+        height: 88%;
+        margin: 0 0.5rem;
+
+        mat-card-header {
+          .trending-coin-icon {
+            width: 1.5rem;
+            height: 1.5rem;
+            padding: 0.25rem;
+            border: 1px solid #ffffff9e;
+            border-radius: 50%;
+          }
+
+          mat-content {
+            height: 100%;
+          }
+        }
+      }
     }
   }
 }

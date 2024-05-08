@@ -1,1 +1,1 @@
-export type Currency = 'INR' | 'USD';
+export type Currency = 'EUR' | 'USD';

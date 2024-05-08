@@ -7,8 +7,8 @@
     <span class="currency-label">Devise</span>
     <mat-form-field appearance="outline">
       <mat-select
-        [ngModel]="currency.getValue()"
-        (valueChange)="currency.setValue($event)"
+        [ngModel]="selectedCurrencyValue()"
+        (valueChange)="currencyService.setValue($event)"
       >
         @for(currency of currencies; track currency){
         <mat-option [value]="currency">{{ currency }}</mat-option>
@@ -17,3 +17,20 @@
     </mat-form-field>
   </div>
 </mat-toolbar>
+
+<div class="home-content">
+  <div class="trending-coins-container">
+    <h3 class="trending-coins-label">Tendances de la devise</h3>
+
+    <div class="trending-coins-list-container">
+      @for(coin of (currencyTrendingCoins | async); track coin){
+      <mat-card>
+        <mat-card-header>
+          <img class="trending-coin-icon" [src]="coin.image" alt="coin icon" />
+        </mat-card-header>
+        <mat-card-content> </mat-card-content>
+      </mat-card>
+      }
+    </div>
+  </div>
+</div>
