@@ -8,20 +8,20 @@ import { Utils } from '../utils';
   providedIn: 'root',
 })
 export class CurrencyService {
-  currency$ = new BehaviorSubject<Utils.Currency>('EUR');
+  currency$ = new BehaviorSubject<Utils.Currency>(Utils.Currency.Euro);
   #http = inject(HttpClient);
 
   setValue(value: Utils.Currency): void {
     this.currency$.next(value);
   }
 
-  // queryCoins(currency: Utils.Currency) {
-  //   return this.#http.get<Coin[]>(
-  //     `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency}&order=market_cap_desc&sparkline=false`
-  //   );
-  // }
-
   queryCoins(currency: Utils.Currency) {
+    return this.#http.get<Coin[]>(
+      `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency}&order=market_cap_desc&sparkline=false`
+    );
+  }
+
+  queryCoinsMock(currency: Utils.Currency) {
     return of([
       {
         id: 'bitcoin',
@@ -3001,12 +3001,14 @@ export class CurrencyService {
       },
     ] as Coin[]);
   }
-  // getTrendingCoins(currency: Currency) {
-  //   return this.#http.get<Coin[]>(
-  //     `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency}&order=gecko_desc&per_page=10&page=1&sparkline=false&price_change_percentage=24h`
-  //   );
-  // }
+
   getTrendingCoins(currency: Utils.Currency) {
+    return this.#http.get<Coin[]>(
+      `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency}&order=gecko_desc&per_page=10&page=1&sparkline=false&price_change_percentage=24h`
+    );
+  }
+
+  getTrendingCoinsMock(currency: Utils.Currency) {
     return of([
       {
         id: 'bitcoin',

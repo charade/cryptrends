@@ -10,7 +10,21 @@ export class CustomMap<K, V> {
   }
 }
 export namespace Utils {
-  export type Currency = 'EUR' | 'USD';
+  export enum Currency {
+    Euro = 'EUR',
+    AmericanDollar = 'USD',
+    CanadianDollar = 'CAD',
+    Yuan = 'CNY',
+    LivreSterling = 'GBP',
+  }
+
+  export const currencies = [
+    Currency.Euro,
+    Currency.AmericanDollar,
+    Currency.CanadianDollar,
+    Currency.Yuan,
+    Currency.LivreSterling,
+  ];
 
   export enum TableColumnEnum {
     Symbol = 'name',

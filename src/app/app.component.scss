@@ -54,7 +54,6 @@ mat-toolbar {
   .trending-coins-container {
     height: 31vh;
     width: 100%;
-    // padding: 0.5rem 1.5rem 0;
     display: flex;
     flex-direction: column;
     margin-bottom: 0.5rem;
@@ -166,14 +165,7 @@ mat-toolbar {
 
         mat-card-actions {
           max-height: 2rem;
-          // padding: 0 0.25rem;
           margin-top: -0.5rem;
-
-          button {
-            color: $light-pastel-blue;
-            font-size: 0.75rem;
-            font-weight: 300;
-          }
         }
       }
     }
@@ -182,7 +174,6 @@ mat-toolbar {
   .coins-list {
     display: flex;
     flex-direction: column;
-    // margin-left: -1rem;
     width: 98.5%;
     height: 51.5%;
 
@@ -244,6 +235,25 @@ mat-toolbar {
             color: $medium-pastel-blue;
           }
 
+          &.coin-name {
+            div {
+              display: flex;
+              align-items: center;
+              & > * {
+                margin: 0 0.5rem;
+              }
+
+              .coin-icon {
+                width: 1rem;
+                height: 1rem;
+                padding: 0.25rem;
+                border: 1px solid #ffffff9e;
+                border-radius: 50%;
+                margin-left: 0.25rem;
+              }
+            }
+          }
+
           .market-cap {
             display: flex;
             align-items: center;
@@ -255,25 +265,24 @@ mat-toolbar {
               color: rgb(243, 78, 77);
             }
           }
-
-          &.action-button-cell {
-            button {
-              color: $light-pastel-blue;
-              font-size: 0.75rem;
-              font-weight: 300;
-              background: transparent;
-              border-radius: 6px;
-              border: 1px solid #ffffff3e;
-              padding: 0.75rem;
-              cursor: pointer;
-
-              &:hover {
-                background-color: #ffffff1b;
-              }
-            }
-          }
         }
       }
     }
+  }
+}
+
+button.action-btn {
+  color: $light-pastel-blue;
+  font-size: 0.75rem;
+  font-weight: 300;
+  background: transparent;
+  border-radius: 6px;
+  border: 1px solid #ffffff3e;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #ffffff1b;
   }
 }

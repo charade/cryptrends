@@ -1,11 +1,10 @@
-import { Component, inject } from '@angular/core';
-import { AsyncPipe, CommonModule } from '@angular/common';
+import { Component, WritableSignal, inject, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
@@ -29,8 +28,6 @@ import { Coin } from './models';
     MatSelectModule,
     FormsModule,
     MatCardModule,
-    AsyncPipe,
-    MatButtonModule,
     MatTableModule,
     MatInputModule,
   ],
@@ -46,13 +43,15 @@ export class AppComponent {
   coinsTableColumnHeader = Utils.coinsTableColumnHeader;
   coinsTableDataSource: MatTableDataSource<Coin>;
 
+  #coinsFilter: WritableSignal<string> = signal('');
+
   currencyTrendingCoins = this.currencyService.currency$.pipe(
     switchMap((currencyValue) =>
       this.currencyService.getTrendingCoins(currencyValue)
     )
   );
 
-  readonly currencies = ['EUR', 'USD'];
+  readonly currencies = Utils.currencies;
   selectedCurrencyValue = toSignal(this.currencyService.currency$);
 
   #matIconRegistry = inject(MatIconRegistry);
@@ -76,10 +75,23 @@ export class AppComponent {
     this.currencyService.currency$
       .pipe(
         switchMap((currency) => this.currencyService.queryCoins(currency)),
-        map(
-          (data) => (this.coinsTableDataSource = new MatTableDataSource(data))
-        )
+        map((data) => {
+          this.coinsTableDataSource = new MatTableDataSource(data);
+          this.coinsTableDataSource.filterPredicate = (coin, filter) =>
+            [coin.symbol, coin.name].some((entry) =>
+              entry.trim().toLowerCase().match(filter.trim().toLowerCase())
+            );
+
+          // check if filter applied while changing currency
+          this.coinsTableDataSource.filter = this.#coinsFilter() || '';
+        })
       )
       .subscribe();
+  }
+
+  filterCoins(event: Event): void {
+    const value = (event.target as HTMLInputElement).value;
+    this.#coinsFilter.set(value);
+    this.coinsTableDataSource.filter = value.trim().toLocaleLowerCase();
   }
 }
