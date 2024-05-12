@@ -48,16 +48,16 @@ mat-toolbar {
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 0 0.5rem;
+  padding-top: 0.25rem;
+  padding-left: 0.5rem;
 
   .trending-coins-container {
     height: 31vh;
     width: 100%;
-    padding: 0.5rem 1.5rem 0;
+    // padding: 0.5rem 1.5rem 0;
     display: flex;
     flex-direction: column;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
 
     .trending-coins-list-container {
       display: flex;
@@ -67,10 +67,10 @@ mat-toolbar {
       overflow-y: hidden;
 
       mat-card {
-        width: 16rem;
+        width: 16.5rem;
         min-width: 13rem;
         height: 100%;
-        margin: 0.25rem;
+        margin-right: 0.25rem;
 
         mat-card-header {
           padding: 0 0.25rem;
@@ -179,59 +179,99 @@ mat-toolbar {
     }
   }
 
-  input {
-    outline: none;
-    width: 13rem;
-    height: 2rem;
-    border: 1px solid #838282;
-    border-left: 17px solid #838282;
-    border-right: 17px solid #838282;
-    background-color: transparent;
-    color: #ffffff9e;
-    padding: 0 2rem;
-    clip-path: polygon(5% 0%, 95% 0%, 100% 100%, 0% 100%);
+  .coins-list {
+    display: flex;
+    flex-direction: column;
+    // margin-left: -1rem;
+    width: 98.5%;
+    height: 51.5%;
 
-    &::placeholder {
-      color: #ffffff6c;
-      font-size: 1rem;
-      font-style: italic;
-    }
-  }
+    .coin-search-bar {
+      align-self: flex-start;
+      width: 14rem;
+      height: 2rem;
+      border-right: 1px solid red;
+      border: none;
+      background-color: #1f1e1e;
+      border-radius: 15px 10px 0 0;
+      padding: 0.5rem;
 
-  .coins-table {
-    width: 94%;
-    height: 45%;
-    align-self: center;
-    overflow-y: scroll;
-    margin-left: -0.75rem;
-    position: relative;
-
-    table {
-      width: 100%;
-      height: 100%;
-
-      .header-rows {
-        position: sticky;
-        top: -0.5rem;
+      input {
+        width: 60%;
+        height: 100%;
+        outline: none;
+        background-color: transparent;
         color: #ffffff9e;
-        background-color: #212121;
-      }
+        padding: 0 2rem;
+        border-radius: 10px;
+        border: 1px solid #ffffff8d;
 
-      th,
-      td {
-        max-width: 8rem;
-      }
-
-      td {
-        &.market-cap-green {
-          color: rgb(101, 209, 96);
+        &::placeholder {
+          color: #ffffff6c;
+          font-size: 0.8rem;
+          font-style: italic;
         }
-        &.market-cap-red {
-          color: rgb(243, 78, 77);
+      }
+    }
+
+    .coins-table {
+      height: 100%;
+      align-self: center;
+      overflow-y: scroll;
+      position: relative;
+      width: 100%;
+
+      table {
+        width: 100%;
+        height: 100%;
+
+        .table-header-rows {
+          position: sticky;
+          top: -0.5rem;
+          color: #ffffff9e;
+          background-color: #1f1e1e;
         }
 
-        &.odd-column {
-          color: $medium-pastel-blue;
+        .table-cell-rows {
+          height: 3.88rem;
+          &:hover {
+            cursor: pointer;
+          }
+        }
+
+        td {
+          &.odd-column {
+            color: $medium-pastel-blue;
+          }
+
+          .market-cap {
+            display: flex;
+            align-items: center;
+            &.market-cap-green {
+              color: rgb(101, 209, 96);
+            }
+
+            &.market-cap-red {
+              color: rgb(243, 78, 77);
+            }
+          }
+
+          &.action-button-cell {
+            button {
+              color: $light-pastel-blue;
+              font-size: 0.75rem;
+              font-weight: 300;
+              background: transparent;
+              border-radius: 6px;
+              border: 1px solid #ffffff3e;
+              padding: 0.75rem;
+              cursor: pointer;
+
+              &:hover {
+                background-color: #ffffff1b;
+              }
+            }
+          }
         }
       }
     }

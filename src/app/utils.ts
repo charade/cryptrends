@@ -13,23 +13,29 @@ export namespace Utils {
   export type Currency = 'EUR' | 'USD';
 
   export enum TableColumnEnum {
-    Name = 'name',
+    Symbol = 'name',
     LastDay = '24h',
+    MarketCap = 'marketCap',
     Price = 'price',
     Volume = 'volume',
+    PlusBtn = 'plus',
   }
 
   export const coinsTableColumns = [
-    TableColumnEnum.Name,
+    TableColumnEnum.Symbol,
     TableColumnEnum.Price,
     TableColumnEnum.LastDay,
+    TableColumnEnum.MarketCap,
     TableColumnEnum.Volume,
+    TableColumnEnum.PlusBtn,
   ];
 
   export const coinsTableColumnHeader = new CustomMap<TableColumnEnum, string>([
-    [TableColumnEnum.Name, 'Name'],
-    [TableColumnEnum.LastDay, '24h'],
+    [TableColumnEnum.Symbol, 'Crypto'],
+    [TableColumnEnum.LastDay, 'market cap%'],
+    [TableColumnEnum.MarketCap, 'market cap'],
     [TableColumnEnum.Price, 'Prix'],
     [TableColumnEnum.Volume, 'volume'],
+    [TableColumnEnum.PlusBtn, ''],
   ]);
 }

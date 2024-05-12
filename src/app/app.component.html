@@ -41,21 +41,15 @@
                   coin.market_cap_change_percentage_24h > 0 ? 'up' : 'down'
                 "
               >
-                @if(coin.market_cap_change_percentage_24h > 0){
-
-                <mat-icon
-                  aria-hidden="false"
-                  aria-label="market cap percentage 24h"
-                  fontIcon="arrow_drop_up"
-                />
-                } @else {
-
-                <mat-icon
-                  aria-hidden="false"
-                  aria-label="market cap percentage 24h"
-                  fontIcon="arrow_drop_down"
-                />
-                } <span>{{ coin.market_cap_change_percentage_24h + "%" }}</span>
+                <ng-container
+                  *ngTemplateOutlet="
+                    marketCapTrendPercent;
+                    context: {
+                      marketCapTrend: coin.market_cap_change_percentage_24h
+                    }
+                  "
+                ></ng-container>
+                <span>{{ coin.market_cap_change_percentage_24h + "%" }}</span>
               </div>
             </div>
           </div>
@@ -86,64 +80,117 @@
     </div>
   </div>
 
-  <!-- coins search bar -->
-  <input placeholder="rechercher une crypto" />
-  <!-- coins lists -->
-  <div class="coins-table">
-    <table mat-table [dataSource]="coinsTableDataSource">
-      <!-- name column -->
-      <ng-container [matColumnDef]="TableColumnEnum.Name">
-        <th mat-header-cell *matHeaderCellDef>
-          {{ coinsTableColumnHeader.get(TableColumnEnum.Name) }}
-        </th>
-        <td mat-cell *matCellDef="let coin">{{ coin.name }}</td>
-      </ng-container>
+  <div class="coins-list">
+    <!-- coins search bar -->
+    <div class="coin-search-bar">
+      <input placeholder="rechercher une crypto..." />
+    </div>
+    <!-- coins lists -->
+    <div class="coins-table">
+      <table mat-table [dataSource]="coinsTableDataSource">
+        <!-- name column -->
+        <ng-container [matColumnDef]="TableColumnEnum.Symbol">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ coinsTableColumnHeader.get(TableColumnEnum.Symbol) }}
+          </th>
+          <td mat-cell *matCellDef="let coin">{{ coin.symbol }}</td>
+        </ng-container>
 
-      <!-- price column -->
-      <ng-container [matColumnDef]="TableColumnEnum.Price">
-        <th mat-header-cell *matHeaderCellDef>
-          {{ coinsTableColumnHeader.get(TableColumnEnum.Price) }}
-        </th>
-        <td mat-cell *matCellDef="let coin" class="odd-column">
-          {{ coin.current_price | currency : selectedCurrencyValue() }}
-        </td>
-      </ng-container>
+        <!-- price column -->
+        <ng-container [matColumnDef]="TableColumnEnum.Price">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ coinsTableColumnHeader.get(TableColumnEnum.Price) }}
+          </th>
+          <td mat-cell *matCellDef="let coin" class="odd-column">
+            {{ coin.current_price | currency : selectedCurrencyValue() }}
+          </td>
+        </ng-container>
 
-      <!-- 24h market cap percentage -->
-      <ng-container [matColumnDef]="TableColumnEnum.LastDay">
-        <th mat-header-cell *matHeaderCellDef>
-          {{ coinsTableColumnHeader.get(TableColumnEnum.LastDay) }}
-        </th>
-        <td
-          mat-cell
-          *matCellDef="let coin"
-          [class]="
-            coin.market_cap_change_percentage_24h > 1
-              ? 'market-cap-green'
-              : 'market-cap-red'
-          "
-        >
-          {{ coin.market_cap_change_percentage_24h }}%
-        </td>
-      </ng-container>
+        <!-- 24h market cap percentage -->
+        <ng-container [matColumnDef]="TableColumnEnum.LastDay">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ coinsTableColumnHeader.get(TableColumnEnum.LastDay) }}
+          </th>
+          <td mat-cell *matCellDef="let coin">
+            <div
+              class="market-cap market-cap-green"
+              [ngClass]="{
+                'market-cap-red': coin.market_cap_change_percentage_24h > 0
+              }"
+            >
+              <ng-container
+                *ngTemplateOutlet="
+                  marketCapTrendPercent;
+                  context: {
+                    marketCapTrend: coin.market_cap_change_percentage_24h
+                  }
+                "
+              ></ng-container>
 
-      <!-- column volume -->
-      <ng-container [matColumnDef]="TableColumnEnum.Volume">
-        <th mat-header-cell *matHeaderCellDef>
-          {{ coinsTableColumnHeader.get(TableColumnEnum.Volume) }}
-        </th>
-        <td mat-cell *matCellDef="let coin" class="odd-column">
-          {{ coin.total_volume | currency : selectedCurrencyValue() }}
-        </td>
-      </ng-container>
+              {{ coin.market_cap_change_percentage_24h }}%
+            </div>
+          </td>
+        </ng-container>
 
-      <tr
-        mat-header-row
-        *matHeaderRowDef="coinsTableRow"
-        class="header-rows"
-      ></tr>
-      <tr mat-row *matRowDef="let row; columns: coinsTableRow"></tr>
-      <!-- (click)="gotoDetails(row)" -->
-    </table>
+        <!-- market cap column -->
+
+        <ng-container [matColumnDef]="TableColumnEnum.MarketCap">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ coinsTableColumnHeader.get(TableColumnEnum.MarketCap) }}
+          </th>
+          <td mat-cell *matCellDef="let coin">
+            {{ coin.market_cap | currency : selectedCurrencyValue() }}
+          </td>
+        </ng-container>
+
+        <!-- column volume -->
+
+        <ng-container [matColumnDef]="TableColumnEnum.Volume">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ coinsTableColumnHeader.get(TableColumnEnum.Volume) }}
+          </th>
+          <td mat-cell *matCellDef="let coin" class="odd-column">
+            {{ coin.total_volume | currency : selectedCurrencyValue() }}
+          </td>
+        </ng-container>
+
+        <ng-container [matColumnDef]="TableColumnEnum.PlusBtn">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ coinsTableColumnHeader.get(TableColumnEnum.PlusBtn) }}
+          </th>
+          <td class="action-button-cell" mat-cell *matCellDef="let coin">
+            <button>plus</button>
+          </td>
+        </ng-container>
+
+        <tr
+          mat-header-row
+          *matHeaderRowDef="coinsTableRow"
+          class="table-header-rows"
+        ></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: coinsTableRow"
+          class="table-cell-rows"
+        ></tr>
+      </table>
+    </div>
   </div>
 </div>
+
+<ng-template #marketCapTrendPercent let-marketCapTrend="marketCapTrend">
+  @if(marketCapTrend > 0){
+
+  <mat-icon
+    aria-hidden="false"
+    aria-label="market cap percentage 24h"
+    fontIcon="arrow_drop_up"
+  />
+  } @else {
+  <mat-icon
+    aria-hidden="false"
+    aria-label="market cap percentage 24h"
+    fontIcon="arrow_drop_down"
+  />
+  }
+</ng-template>
