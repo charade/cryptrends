@@ -21,7 +21,14 @@ import {
 } from '@angular/material/paginator';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-import { BehaviorSubject, Subject, combineLatest, map, switchMap } from 'rxjs';
+import {
+  BehaviorSubject,
+  Subject,
+  combineLatest,
+  map,
+  switchMap,
+  tap,
+} from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { CurrencyService } from './services/currency.service';
 import { FormsModule } from '@angular/forms';
@@ -60,9 +67,8 @@ export class AppComponent {
 
   #coinsFilter: WritableSignal<string> = signal('');
   #paginatorChange = new BehaviorSubject<{
-    pageSize: number;
     pageIndex: number;
-  }>({ pageSize: 10, pageIndex: 1 });
+  }>({ pageIndex: 0 });
 
   currencyTrendingCoins = this.currencyService.currency$.pipe(
     switchMap((currencyValue) =>
@@ -91,13 +97,12 @@ export class AppComponent {
   }
 
   #loadCoinsTable(): void {
-    combineLatest([this.currencyService.currency$, this.#paginatorChange])
+    this.currencyService.currency$
       .pipe(
-        switchMap(([currency, { pageSize, pageIndex }]) =>
-          this.currencyService.queryCoins(currency, pageSize, pageIndex)
-        ),
+        switchMap((currency) => this.currencyService.queryCoins(currency)),
         map((data) => {
           this.coinsTableDataSource = new MatTableDataSource(data);
+          this.coinsTableDataSource.paginator = this.matTablePaginator;
           this.coinsTableDataSource.filterPredicate = (coin, filter) =>
             [coin.symbol, coin.name].some((entry) =>
               entry.trim().toLowerCase().match(filter.trim().toLowerCase())
@@ -110,8 +115,8 @@ export class AppComponent {
       .subscribe();
   }
 
-  OnPaginatorChange({ pageSize, pageIndex }: PageEvent) {
-    this.#paginatorChange.next({ pageIndex, pageSize });
+  OnPaginatorChange({ pageIndex }: PageEvent) {
+    this.#paginatorChange.next({ pageIndex });
   }
 
   filterCoins(event: Event): void {

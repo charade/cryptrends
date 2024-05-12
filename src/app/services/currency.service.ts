@@ -15,9 +15,9 @@ export class CurrencyService {
     this.currency$.next(value);
   }
 
-  queryCoins(currency: Utils.Currency, pageSize: number, pageIndex: number) {
+  queryCoins(currency: Utils.Currency) {
     return this.#http.get<Coin[]>(
-      `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency}&per_page=${pageSize}&page=${pageIndex}&order=market_cap_desc&sparkline=false`
+      `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency}&per_page=250&order=market_cap_desc&sparkline=false`
     );
   }
 

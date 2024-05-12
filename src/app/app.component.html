@@ -185,8 +185,9 @@
     </div>
     <mat-paginator
       #matTablePaginator
-      [pageSizeOptions]="[10, 25, 50, 100]"
-      length="100"
+      [pageSize]="5"
+      [pageSizeOptions]="[5, 10, 25, 50, 100]"
+      [length]="250"
       (page)="OnPaginatorChange($event)"
     ></mat-paginator>
   </div>

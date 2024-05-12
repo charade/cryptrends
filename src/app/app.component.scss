@@ -175,7 +175,7 @@ mat-toolbar {
     display: flex;
     flex-direction: column;
     width: 98.5%;
-    height: 51.5%;
+    height: 56.5%;
 
     .coin-search-bar {
       align-self: flex-start;
@@ -230,6 +230,11 @@ mat-toolbar {
           }
         }
 
+        th,
+        td {
+          min-width: 7.25rem;
+        }
+
         td {
           &.odd-column {
             color: $medium-pastel-blue;
@@ -279,9 +284,6 @@ mat-toolbar {
             mat-form-field {
               padding: 0;
             }
-          }
-
-          .mat-mdc-paginator-range-actions {
           }
         }
       }
