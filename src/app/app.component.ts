@@ -1,4 +1,11 @@
-import { Component, WritableSignal, inject, signal } from '@angular/core';
+import {
+  Component,
+  ViewChild,
+  WritableSignal,
+  inject,
+  signal,
+  viewChild,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -7,9 +14,14 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
+import {
+  MatPaginator,
+  MatPaginatorModule,
+  PageEvent,
+} from '@angular/material/paginator';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-import { map, switchMap } from 'rxjs';
+import { BehaviorSubject, Subject, combineLatest, map, switchMap } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { CurrencyService } from './services/currency.service';
 import { FormsModule } from '@angular/forms';
@@ -30,6 +42,7 @@ import { Coin } from './models';
     MatCardModule,
     MatTableModule,
     MatInputModule,
+    MatPaginatorModule,
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
@@ -43,7 +56,13 @@ export class AppComponent {
   coinsTableColumnHeader = Utils.coinsTableColumnHeader;
   coinsTableDataSource: MatTableDataSource<Coin>;
 
+  @ViewChild('matTablePaginator') matTablePaginator: MatPaginator;
+
   #coinsFilter: WritableSignal<string> = signal('');
+  #paginatorChange = new BehaviorSubject<{
+    pageSize: number;
+    pageIndex: number;
+  }>({ pageSize: 10, pageIndex: 1 });
 
   currencyTrendingCoins = this.currencyService.currency$.pipe(
     switchMap((currencyValue) =>
@@ -72,9 +91,11 @@ export class AppComponent {
   }
 
   #loadCoinsTable(): void {
-    this.currencyService.currency$
+    combineLatest([this.currencyService.currency$, this.#paginatorChange])
       .pipe(
-        switchMap((currency) => this.currencyService.queryCoins(currency)),
+        switchMap(([currency, { pageSize, pageIndex }]) =>
+          this.currencyService.queryCoins(currency, pageSize, pageIndex)
+        ),
         map((data) => {
           this.coinsTableDataSource = new MatTableDataSource(data);
           this.coinsTableDataSource.filterPredicate = (coin, filter) =>
@@ -87,6 +108,10 @@ export class AppComponent {
         })
       )
       .subscribe();
+  }
+
+  OnPaginatorChange({ pageSize, pageIndex }: PageEvent) {
+    this.#paginatorChange.next({ pageIndex, pageSize });
   }
 
   filterCoins(event: Event): void {

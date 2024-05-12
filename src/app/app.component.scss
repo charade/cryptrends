@@ -268,6 +268,24 @@ mat-toolbar {
         }
       }
     }
+
+    mat-paginator {
+      ::ng-deep .mat-mdc-paginator-outer-container {
+        .mat-mdc-paginator-container {
+          .mat-mdc-paginator-page-size {
+            display: flex;
+            align-items: center;
+
+            mat-form-field {
+              padding: 0;
+            }
+          }
+
+          .mat-mdc-paginator-range-actions {
+          }
+        }
+      }
+    }
   }
 }
 
