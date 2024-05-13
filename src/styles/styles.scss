@@ -27,3 +27,16 @@ mat-form-field {
     max-width: 3rem !important;
   }
 }
+
+// coin detail modal pane
+.cdk-overlay-pane {
+  width: 94vw !important;
+  max-width: 94vw !important;
+}
+
+@media screen and (min-width: 992px) {
+  .cdk-overlay-pane {
+    width: 46vw !important;
+    max-width: 60vw !important;
+  }
+}

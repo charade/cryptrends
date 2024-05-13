@@ -33,7 +33,7 @@
             />
             <div class="market-cap-container">
               <span class="market-cap-time">{{
-                (coin.symbol | uppercase) + " / " + "24h"
+                coin.symbol + " / " + "24h"
               }}</span>
               <div
                 class="market-cap-indicator"
@@ -73,7 +73,9 @@
           </div>
         </mat-card-content>
         <mat-card-actions>
-          <button class="action-btn">plus</button>
+          <button class="action-btn" (click)="onOpenDetails(coin.id)">
+            plus
+          </button>
         </mat-card-actions>
       </mat-card>
       }
@@ -115,9 +117,15 @@
         </ng-container>
 
         <!-- 24h market cap percentage -->
-        <ng-container [matColumnDef]="TableColumnEnum.LastDay">
+        <ng-container
+          [matColumnDef]="TableColumnEnum.LastDayMarketCapPercentage"
+        >
           <th mat-header-cell *matHeaderCellDef>
-            {{ coinsTableColumnHeader.get(TableColumnEnum.LastDay) }}
+            {{
+              coinsTableColumnHeader.get(
+                TableColumnEnum.LastDayMarketCapPercentage
+              )
+            }}
           </th>
           <td mat-cell *matCellDef="let coin">
             <div
@@ -167,7 +175,9 @@
             {{ coinsTableColumnHeader.get(TableColumnEnum.PlusBtn) }}
           </th>
           <td class="action-button-cell" mat-cell *matCellDef="let coin">
-            <button class="action-btn">plus</button>
+            <button class="action-btn" (click)="onOpenDetails(coin.id)">
+              plus
+            </button>
           </td>
         </ng-container>
 
@@ -180,6 +190,7 @@
           mat-row
           *matRowDef="let row; columns: coinsTableRow"
           class="table-cell-rows"
+          (click)="(row.id)"
         ></tr>
       </table>
     </div>
@@ -210,3 +221,5 @@
   />
   }
 </ng-template>
+
+<router-outlet name="details"></router-outlet>

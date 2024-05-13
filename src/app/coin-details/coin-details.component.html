@@ -1,0 +1,76 @@
+<div class="coin-details-container">
+  <div class="coin-details-header">
+    <div class="coin-name-container">
+      <img [src]="coinDetails().image.large" alt="coin-icon" />
+      <h4 class="coin-name">
+        {{
+          coinDetails().name +
+            " " +
+            "(" +
+            coinDetails().symbol +
+            ")" +
+            " / " +
+            selectedCurrency
+        }}
+      </h4>
+    </div>
+    <mat-icon
+      fontIcon="cancel"
+      aria-hidden="false"
+      aria-label="close icon button"
+      role="button"
+      (click)="matDialogRef.close()"
+    />
+  </div>
+  <div class="coin-detail-blocs">
+    <div class="coin-detail-bloc">
+      <span class="coin-rank">
+        {{ "Rang #" + coinDetails().market_data.market_cap_rank }}
+      </span>
+      <h5 class="coin-current-price">
+        {{
+          coinDetails().market_data.current_price[
+            selectedCurrency.toLocaleLowerCase()
+          ] | currency : selectedCurrency
+        }}
+      </h5>
+    </div>
+
+    <div class="coin-detail-bloc">
+      <span class="hour-high">
+        {{ "max / 24h" + " " + selectedCurrency }}
+      </span>
+      <span class="hour-low">{{
+        coinDetails().market_data.high_24h[selectedCurrency.toLocaleLowerCase()]
+          | currency : selectedCurrency
+      }}</span>
+    </div>
+    <div class="coin-detail-bloc">
+      <span class="hour-low">
+        {{ "min / 24h" + " " + selectedCurrency }}
+      </span>
+      <span class="hour-low">{{
+        coinDetails().market_data.low_24h[selectedCurrency.toLocaleLowerCase()]
+          | currency : selectedCurrency
+      }}</span>
+    </div>
+
+    <!-- media query -->
+
+    <div class="coin-detail-bloc">
+      <span class="circulating-supply"> en circulation </span>
+      <span class="circulating-supply">{{
+        coinDetails().market_data.circulating_supply
+      }}</span>
+    </div>
+
+    <div class="coin-detail-bloc">
+      <span class="market-cap"> capitalisation / 24h </span>
+      <span class="market-cap">{{
+        coinDetails().market_data.market_cap_change_24h_in_currency[
+          selectedCurrency.toLocaleLowerCase()
+        ] | currency : selectedCurrency
+      }}</span>
+    </div>
+  </div>
+</div>

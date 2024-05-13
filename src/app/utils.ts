@@ -28,7 +28,7 @@ export namespace Utils {
 
   export enum TableColumnEnum {
     Symbol = 'name',
-    LastDay = '24h',
+    LastDayMarketCapPercentage = 'marketCap24h',
     MarketCap = 'marketCap',
     Price = 'price',
     Volume = 'volume',
@@ -38,7 +38,7 @@ export namespace Utils {
   export const coinsTableColumns = [
     TableColumnEnum.Symbol,
     TableColumnEnum.Price,
-    TableColumnEnum.LastDay,
+    TableColumnEnum.LastDayMarketCapPercentage,
     TableColumnEnum.MarketCap,
     TableColumnEnum.Volume,
     TableColumnEnum.PlusBtn,
@@ -46,8 +46,8 @@ export namespace Utils {
 
   export const coinsTableColumnHeader = new CustomMap<TableColumnEnum, string>([
     [TableColumnEnum.Symbol, 'Crypto'],
-    [TableColumnEnum.LastDay, 'market cap%'],
-    [TableColumnEnum.MarketCap, 'market cap'],
+    [TableColumnEnum.LastDayMarketCapPercentage, '%Capitalisation'],
+    [TableColumnEnum.MarketCap, 'Capitalisation'],
     [TableColumnEnum.Price, 'Prix'],
     [TableColumnEnum.Volume, 'volume'],
     [TableColumnEnum.PlusBtn, ''],

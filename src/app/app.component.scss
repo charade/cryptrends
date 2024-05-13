@@ -219,8 +219,10 @@ mat-toolbar {
         .table-header-rows {
           position: sticky;
           top: -0.5rem;
-          color: #ffffff9e;
+          color: #ffffffd2;
           background-color: #1f1e1e;
+          font-size: 1rem;
+          font-weight: 400;
         }
 
         .table-cell-rows {
@@ -283,6 +285,19 @@ mat-toolbar {
 
             mat-form-field {
               padding: 0;
+            }
+          }
+
+          .mat-mdc-paginator-range-actions {
+            border: 1px solid #ffffff31;
+            height: 2.4rem;
+            overflow: hidden;
+            margin-right: 0.75rem;
+            border-radius: 5px;
+
+            & > *:not(:first-child) {
+              border-radius: 0%;
+              border-left: 1px solid #ffffff3e;
             }
           }
         }

@@ -6,7 +6,7 @@ import {
   signal,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
@@ -58,6 +58,8 @@ export class AppComponent {
   coinsTableColumnHeader = Utils.coinsTableColumnHeader;
   coinsTableDataSource: MatTableDataSource<Coin>;
 
+  #router = inject(Router);
+
   @ViewChild('matTablePaginator') matTablePaginator: MatPaginator;
 
   #coinsFilter: WritableSignal<string> = signal('');
@@ -67,7 +69,7 @@ export class AppComponent {
 
   currencyTrendingCoins = this.currencyService.currency$.pipe(
     switchMap((currencyValue) =>
-      this.currencyService.getTrendingCoins(currencyValue)
+      this.currencyService.getTrendingCoinsMock(currencyValue)
     )
   );
 
@@ -118,5 +120,9 @@ export class AppComponent {
     const value = (event.target as HTMLInputElement).value;
     this.#coinsFilter.set(value);
     this.coinsTableDataSource.filter = value.trim().toLocaleLowerCase();
+  }
+
+  onOpenDetails(coinId: string): void {
+    this.#router.navigate([{ outlets: { details: [coinId] } }]);
   }
 }
