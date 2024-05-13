@@ -4,7 +4,6 @@ import {
   WritableSignal,
   inject,
   signal,
-  viewChild,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
@@ -16,24 +15,19 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import {
   MatPaginator,
+  MatPaginatorIntl,
   MatPaginatorModule,
   PageEvent,
 } from '@angular/material/paginator';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-import {
-  BehaviorSubject,
-  Subject,
-  combineLatest,
-  map,
-  switchMap,
-  tap,
-} from 'rxjs';
+import { BehaviorSubject, map, switchMap } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { CurrencyService } from './services/currency.service';
 import { FormsModule } from '@angular/forms';
 import { Utils } from './utils';
 import { Coin } from './models';
+import { CustomPaginatorIntl } from './services/custom-paginator-intl';
 
 @Component({
   selector: 'app-root',
@@ -51,6 +45,7 @@ import { Coin } from './models';
     MatInputModule,
     MatPaginatorModule,
   ],
+  providers: [{ provide: MatPaginatorIntl, useClass: CustomPaginatorIntl }],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
