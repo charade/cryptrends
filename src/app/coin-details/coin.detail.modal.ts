@@ -16,10 +16,7 @@ import { Router } from '@angular/router';
 export class CoinDetailsModalComponent implements OnInit {
   #modalController = inject(MatDialog);
   #router = inject(Router);
-  readonly config: MatDialogConfig = {
-    minWidth: '98vw',
-    height: '90vh',
-  };
+
   ngOnInit(): void {
     this.#modalController.open(CoinDetailsComponent);
     this.#modalController.afterAllClosed.subscribe(() =>

@@ -36,41 +36,46 @@
       </h5>
     </div>
 
-    <div class="coin-detail-bloc">
-      <span class="hour-high">
-        {{ "max / 24h" + " " + selectedCurrency }}
-      </span>
-      <span class="hour-low">{{
-        coinDetails().market_data.high_24h[selectedCurrency.toLocaleLowerCase()]
-          | currency : selectedCurrency
-      }}</span>
-    </div>
-    <div class="coin-detail-bloc">
-      <span class="hour-low">
-        {{ "min / 24h" + " " + selectedCurrency }}
-      </span>
-      <span class="hour-low">{{
-        coinDetails().market_data.low_24h[selectedCurrency.toLocaleLowerCase()]
-          | currency : selectedCurrency
-      }}</span>
-    </div>
+    <div>
+      <div class="coin-detail-bloc">
+        <span class="hour-high">
+          {{ "max / 24h" + " " + selectedCurrency }}
+        </span>
+        <span class="hour-low">{{
+          coinDetails().market_data.high_24h[
+            selectedCurrency.toLocaleLowerCase()
+          ] | currency : selectedCurrency
+        }}</span>
+      </div>
+      <div class="coin-detail-bloc">
+        <span class="hour-low">
+          {{ "min / 24h" + " " + selectedCurrency }}
+        </span>
+        <span class="hour-low">{{
+          coinDetails().market_data.low_24h[
+            selectedCurrency.toLocaleLowerCase()
+          ] | currency : selectedCurrency
+        }}</span>
+      </div>
 
-    <!-- media query -->
+      <!-- media query -->
 
-    <div class="coin-detail-bloc">
-      <span class="circulating-supply"> en circulation </span>
-      <span class="circulating-supply">{{
-        coinDetails().market_data.circulating_supply
-      }}</span>
-    </div>
+      <div class="coin-detail-bloc">
+        <span class="circulating-supply"> en circulation </span>
+        <span class="circulating-supply">{{
+          coinDetails().market_data.circulating_supply
+        }}</span>
+      </div>
 
-    <div class="coin-detail-bloc">
-      <span class="market-cap"> capitalisation / 24h </span>
-      <span class="market-cap">{{
-        coinDetails().market_data.market_cap_change_24h_in_currency[
-          selectedCurrency.toLocaleLowerCase()
-        ] | currency : selectedCurrency
-      }}</span>
+      <div class="coin-detail-bloc">
+        <span class="market-cap"> capitalisation / 24h </span>
+        <span class="market-cap">{{
+          coinDetails().market_data.market_cap_change_24h_in_currency[
+            selectedCurrency.toLocaleLowerCase()
+          ] | currency : selectedCurrency
+        }}</span>
+      </div>
     </div>
+    <canvas id="chart" width="550" height="250"></canvas>
   </div>
 </div>
