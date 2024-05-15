@@ -66,9 +66,9 @@
             }}</span>
           </div>
           <div class="trending-coin-info">
-            <span>max / 24h</span>
+            <span>cap</span>
             <span>{{
-              coin.high_24h | currency : currencyService.currency$.value
+              coin.market_cap | currency : currencyService.currency$.value
             }}</span>
           </div>
         </mat-card-content>

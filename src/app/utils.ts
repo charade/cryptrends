@@ -9,6 +9,7 @@ export class CustomMap<K, V> {
     return this.#map.has(k) ? this.#map.get(k) : undefined;
   }
 }
+
 export namespace Utils {
   export enum Currency {
     Euro = 'EUR',
@@ -51,5 +52,30 @@ export namespace Utils {
     [TableColumnEnum.Price, 'Prix'],
     [TableColumnEnum.Volume, 'volume'],
     [TableColumnEnum.PlusBtn, ''],
+  ]);
+
+  // coins details
+  export enum CoinDetailsPriceChangeTableEnum {
+    LastDay = '24h',
+    LastWeek = '1week',
+    LastMonth = '1month',
+    LastYear = '1year',
+  }
+
+  export const coinDetailsPriceChangeColumns = [
+    CoinDetailsPriceChangeTableEnum.LastDay,
+    CoinDetailsPriceChangeTableEnum.LastWeek,
+    CoinDetailsPriceChangeTableEnum.LastMonth,
+    CoinDetailsPriceChangeTableEnum.LastYear,
+  ];
+
+  export const coinDetailsPriceChangeHeader = new CustomMap<
+    CoinDetailsPriceChangeTableEnum,
+    string
+  >([
+    [CoinDetailsPriceChangeTableEnum.LastDay, '24h'],
+    [CoinDetailsPriceChangeTableEnum.LastWeek, '1 semaine'],
+    [CoinDetailsPriceChangeTableEnum.LastMonth, '1 mois'],
+    [CoinDetailsPriceChangeTableEnum.LastYear, '1 an'],
   ]);
 }

@@ -1,9 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import {
-  MatDialog,
-  MatDialogConfig,
-  MatDialogModule,
-} from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CoinDetailsComponent } from './coin-details.component';
 import { Router } from '@angular/router';
 
@@ -18,7 +14,10 @@ export class CoinDetailsModalComponent implements OnInit {
   #router = inject(Router);
 
   ngOnInit(): void {
-    this.#modalController.open(CoinDetailsComponent);
+    this.#modalController.open(CoinDetailsComponent, {
+      backdropClass: 'dialog-backdrop',
+    });
+
     this.#modalController.afterAllClosed.subscribe(() =>
       this.#router.navigate([''])
     );

@@ -1,8 +1,9 @@
 import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable, map, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { Coin } from '../models';
+import { Coin, CoinDetails, CoinGraphicalData } from '../models';
 import { Utils } from '../utils';
+import { CurrencyPipe } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
@@ -28,14 +29,14 @@ export class CurrencyService {
   }
 
   getCoinById(coinId: string) {
-    return this.#http.get<any>(
+    return this.#http.get<CoinDetails>(
       `https://api.coingecko.com/api/v3/coins/${coinId}`
     );
   }
 
   getGraphicalCoinDetailsData(coinId: string, currency: string) {
     return this.#http
-      .get<any>(
+      .get<CoinGraphicalData>(
         `https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=${currency}&days=30`
       )
       .pipe(

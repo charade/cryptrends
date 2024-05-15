@@ -1,13 +1,13 @@
 <div class="coin-details-container">
   <div class="coin-details-header">
     <div class="coin-name-container">
-      <img [src]="coinDetails().image.large" alt="coin-icon" />
+      <img [src]="coinDetails()?.image.large" alt="coin-icon" />
       <h4 class="coin-name">
         {{
-          coinDetails().name +
+          coinDetails()?.name +
             " " +
             "(" +
-            coinDetails().symbol +
+            coinDetails()?.symbol +
             ")" +
             " / " +
             selectedCurrency
@@ -22,14 +22,15 @@
       (click)="matDialogRef.close()"
     />
   </div>
+
   <div class="coin-detail-blocs">
-    <div class="coin-detail-bloc">
+    <div class="coin-detail-bloc first">
       <span class="coin-rank">
-        {{ "Rang #" + coinDetails().market_data.market_cap_rank }}
+        {{ "Rang #" + coinDetails()?.market_data.market_cap_rank }}
       </span>
       <h5 class="coin-current-price">
         {{
-          coinDetails().market_data.current_price[
+          coinDetails()?.market_data.current_price[
             selectedCurrency.toLocaleLowerCase()
           ] | currency : selectedCurrency
         }}
@@ -42,7 +43,7 @@
           {{ "max / 24h" + " " + selectedCurrency }}
         </span>
         <span class="hour-low">{{
-          coinDetails().market_data.high_24h[
+          coinDetails()?.market_data.high_24h[
             selectedCurrency.toLocaleLowerCase()
           ] | currency : selectedCurrency
         }}</span>
@@ -52,30 +53,112 @@
           {{ "min / 24h" + " " + selectedCurrency }}
         </span>
         <span class="hour-low">{{
-          coinDetails().market_data.low_24h[
+          coinDetails()?.market_data.low_24h[
             selectedCurrency.toLocaleLowerCase()
           ] | currency : selectedCurrency
         }}</span>
       </div>
-
-      <!-- media query -->
 
       <div class="coin-detail-bloc">
         <span class="circulating-supply"> en circulation </span>
         <span class="circulating-supply">{{
-          coinDetails().market_data.circulating_supply
-        }}</span>
-      </div>
-
-      <div class="coin-detail-bloc">
-        <span class="market-cap"> capitalisation / 24h </span>
-        <span class="market-cap">{{
-          coinDetails().market_data.market_cap_change_24h_in_currency[
-            selectedCurrency.toLocaleLowerCase()
-          ] | currency : selectedCurrency
+          coinDetails()?.market_data.circulating_supply
         }}</span>
       </div>
     </div>
-    <canvas id="chart" width="550" height="250"></canvas>
+
+    <!-- price changes timeline 4x1 table -->
+    <div class="price-change-container">
+      <span class="label">Évolution du prix</span>
+
+      <table mat-table [dataSource]="coinPriceChangeDataSource">
+        <!-- price change in currency 24h- -->
+        <ng-container [matColumnDef]="CoinDetailsPriceChangeTableEnum.LastDay">
+          <th mat-header-cell *matHeaderCellDef>
+            {{
+              coinDetailsPriceChangeHeader.get(
+                CoinDetailsPriceChangeTableEnum.LastDay
+              )
+            }}
+          </th>
+          <td
+            [ngClass]="{ up: coin.lastDay > 0, down: coin.lastDay < 0 }"
+            mat-cell
+            *matCellDef="let coin"
+          >
+            {{ coin.lastDay + "%" }}
+          </td>
+        </ng-container>
+
+        <!-- price change in currency 7 days -->
+        <ng-container [matColumnDef]="CoinDetailsPriceChangeTableEnum.LastWeek">
+          <th mat-header-cell *matHeaderCellDef>
+            {{
+              coinDetailsPriceChangeHeader.get(
+                CoinDetailsPriceChangeTableEnum.LastWeek
+              )
+            }}
+          </th>
+
+          <td
+            [ngClass]="{ up: coin.lastWeek > 0, down: coin.lastWeek < 0 }"
+            mat-cell
+            *matCellDef="let coin"
+          >
+            {{ coin.lastWeek + "%" }}
+          </td>
+        </ng-container>
+
+        <!-- price change in currency 30 days -->
+        <ng-container
+          [matColumnDef]="CoinDetailsPriceChangeTableEnum.LastMonth"
+        >
+          <th mat-header-cell *matHeaderCellDef>
+            {{
+              coinDetailsPriceChangeHeader.get(
+                CoinDetailsPriceChangeTableEnum.LastMonth
+              )
+            }}
+          </th>
+          <td
+            [ngClass]="{ up: coin.lastMonth > 0, down: coin.lastMonth < 0 }"
+            mat-cell
+            *matCellDef="let coin"
+          >
+            {{ coin.lastMonth + "%" }}
+          </td>
+          ></ng-container
+        >
+        <ng-container [matColumnDef]="CoinDetailsPriceChangeTableEnum.LastYear">
+          <th mat-header-cell *matHeaderCellDef>
+            {{
+              coinDetailsPriceChangeHeader.get(
+                CoinDetailsPriceChangeTableEnum.LastYear
+              )
+            }}
+          </th>
+          <td
+            [ngClass]="{ up: coin.lastYear > 0, down: coin.lastYear < 0 }"
+            mat-cell
+            *matCellDef="let coin"
+          >
+            {{ coin.lastYear + "%" }}
+          </td>
+        </ng-container>
+
+        <tr
+          mat-header-row
+          *matHeaderRowDef="coinDetailsPriceChangeColumns"
+          class="coin-price-change-table-headers"
+        ></tr>
+        <tr
+          mat-row
+          *matRowDef="let rows; columns: coinDetailsPriceChangeColumns"
+        ></tr>
+      </table>
+    </div>
+    <div class="graph-container">
+      <canvas id="chart"></canvas>
+    </div>
   </div>
 </div>

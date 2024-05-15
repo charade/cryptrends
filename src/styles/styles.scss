@@ -28,15 +28,28 @@ mat-form-field {
   }
 }
 
+.dialog-backdrop {
+  background-color: #000000d5;
+}
 // coin detail modal pane
 .cdk-overlay-pane {
   width: 94vw !important;
   max-width: 94vw !important;
+  box-shadow: 0 0 2px #ffffffa8;
+  overflow: hidden;
 }
 
 @media screen and (min-width: 992px) {
   .cdk-overlay-pane {
-    width: 54vw !important;
-    max-width: 60vw !important;
+    width: 74vw !important;
+    max-width: 74vw !important;
+    height: 50vh;
+  }
+}
+@media screen and (min-width: 1025px) {
+  .cdk-overlay-pane {
+    width: 48vw !important;
+    max-width: 74vw !important;
+    height: 92vh;
   }
 }
