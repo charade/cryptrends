@@ -1,5 +1,6 @@
 import {
   Component,
+  OnDestroy,
   ViewChild,
   WritableSignal,
   inject,
@@ -21,7 +22,7 @@ import {
 } from '@angular/material/paginator';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-import { BehaviorSubject, map, switchMap } from 'rxjs';
+import { BehaviorSubject, Subscription, map, switchMap } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { CurrencyService } from './services/currency.service';
 import { FormsModule } from '@angular/forms';
@@ -49,7 +50,7 @@ import { CustomPaginatorIntl } from './services/custom-paginator-intl';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnDestroy {
   title = 'cryptrends';
 
   currencyService = inject(CurrencyService);
@@ -78,15 +79,20 @@ export class AppComponent {
 
   #matIconRegistry = inject(MatIconRegistry);
   #domSanitizer = inject(DomSanitizer);
+  #subscription = new Subscription();
 
   constructor() {
     this.#loadAppLogo();
     this.#loadCoinsTable();
   }
 
+  ngOnDestroy(): void {
+    this.#subscription.unsubscribe();
+  }
+
   #loadAppLogo(): void {
     this.#matIconRegistry.addSvgIcon(
-      'crypTrends',
+      'crypTrends-icon',
       this.#domSanitizer.bypassSecurityTrustResourceUrl(
         '../assets/cryptrends.svg'
       )
@@ -94,7 +100,7 @@ export class AppComponent {
   }
 
   #loadCoinsTable(): void {
-    this.currencyService.currency$
+    this.#subscription = this.currencyService.currency$
       .pipe(
         switchMap((currency) => this.currencyService.queryCoins(currency)),
         map((data) => {

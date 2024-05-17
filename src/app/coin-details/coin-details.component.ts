@@ -1,14 +1,9 @@
-import {
-  AfterViewInit,
-  Component,
-  OnDestroy,
-  OnInit,
-  inject,
-} from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { CurrencyService } from '../services/currency.service';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogRef } from '@angular/material/dialog';
 import { CurrencyPipe, NgClass } from '@angular/common';
 import { BreakpointObserver } from '@angular/cdk/layout';
@@ -41,9 +36,15 @@ Chart.register(
   standalone: true,
   templateUrl: './coin-details.component.html',
   styleUrl: './coin-details.component.scss',
-  imports: [MatIconModule, CurrencyPipe, MatTableModule, NgClass],
+  imports: [
+    MatIconModule,
+    CurrencyPipe,
+    MatTableModule,
+    NgClass,
+    MatSnackBarModule,
+  ],
 })
-export class CoinDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
+export class CoinDetailsComponent implements AfterViewInit, OnDestroy {
   CoinDetailsPriceChangeTableEnum = Utils.CoinDetailsPriceChangeTableEnum;
   coinDetailsPriceChangeColumns = Utils.coinDetailsPriceChangeColumns;
   coinDetailsPriceChangeHeader = Utils.coinDetailsPriceChangeHeader;
@@ -93,12 +94,6 @@ export class CoinDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
       )
     )
   );
-
-  ngOnInit() {
-    this.mediaObserver
-      .observe('(max-width: 500px)')
-      .subscribe((data) => console.log(data));
-  }
 
   ngAfterViewInit(): void {
     this.#subscription = this.#route.firstChild.paramMap

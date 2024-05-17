@@ -7,4 +7,5 @@ export const routes: Routes = [
     component: CoinDetailsModalComponent,
     outlet: 'details',
   },
+  { path: '**', redirectTo: '', pathMatch: 'full' },
 ];

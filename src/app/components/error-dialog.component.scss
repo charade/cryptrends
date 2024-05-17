@@ -1,0 +1,49 @@
+@import "../../styles/colors.scss";
+
+.error-dialog-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+
+  mat-icon {
+    width: 4rem;
+    height: 4rem;
+    border: 1px solid rgb(252, 175, 31);
+    padding: 0.5rem;
+    border-radius: 50%;
+    align-self: center;
+    margin: 1rem;
+  }
+
+  .error-dialog-content {
+    color: #ffffff62;
+    text-align: center;
+    text-wrap: wrap;
+    display: flex;
+    flex-direction: column;
+
+    & > * {
+      width: 70%;
+      align-self: center;
+    }
+
+    h4 {
+      font-size: 1rem;
+      font-weight: 300;
+
+      a {
+        border: none;
+        text-decoration: none;
+        color: $light-pastel-blue;
+        outline: none;
+      }
+    }
+    .emojis-container {
+      font-size: 1.5rem;
+      font-weight: 200;
+      text-align: center;
+      margin: 1rem 0;
+    }
+  }
+}

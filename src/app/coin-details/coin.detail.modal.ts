@@ -16,6 +16,7 @@ export class CoinDetailsModalComponent implements OnInit {
   ngOnInit(): void {
     this.#modalController.open(CoinDetailsComponent, {
       backdropClass: 'dialog-backdrop',
+      id: 'details-dialog',
     });
 
     this.#modalController.afterAllClosed.subscribe(() =>

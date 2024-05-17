@@ -37,19 +37,20 @@ mat-form-field {
   max-width: 94vw !important;
   box-shadow: 0 0 2px #ffffffa8;
   overflow: hidden;
+  background-color: #202020;
 }
 
 @media screen and (min-width: 992px) {
   .cdk-overlay-pane {
     width: 74vw !important;
     max-width: 74vw !important;
-    height: 50vh;
+    height: 46vh;
   }
 }
 @media screen and (min-width: 1025px) {
   .cdk-overlay-pane {
     width: 48vw !important;
     max-width: 74vw !important;
-    height: 92vh;
+    height: 91vh;
   }
 }
