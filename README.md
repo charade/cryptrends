@@ -8,20 +8,18 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The appli
 
 ## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Cryptrends is about tracking trends in crypto world, i made this app to have a better understanding of cryptos. This apps posts first the cryptos trending and a list of +200 depending of the chosen currency, each crypto details can also be posted with a detailed graph. This app's main purpose is to have a better understanding of cryptos.
 
-## Build
+## Home
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Displaying trending cryptos in selected currency and a more over 200 crypto that can be filtered by name.
 
-## Running unit tests
+![cryptrends-home](./screenshots/home.png)
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Details
 
-## Running end-to-end tests
+The selected crypto details show off the trends on the market for the last hour, day, week, month and year.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+You can see on a detailed graph the trend on the selected crypto depending on the currency for the last month.
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+![cryptrends-crypto-details](./screenshots/details.png)
